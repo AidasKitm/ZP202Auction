@@ -1,0 +1,1 @@
+categories = {"car":"cars", "mobile phone":"mobile phones"}
