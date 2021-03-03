@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
 <body>
-    {% for field in form %}
-        {{ field }}
-    {% endfor %}
+<form method="POST">
+    {{ registration_form.csrf_token }}
+                <div class="">
+                <i class="">First name</i>
+                {{ registration_form.first_name(class_="validate") }}
+                {{ registration_form.first_name.label }}
+            </div>
+                            <div class="">
+                <i class="">Last name</i>
+                {{ registration_form.last_name(class_="validate") }}
+                {{ registration_form.last_name.label }}
+            </div>
+            <div class="">
+                <i class="">email</i>
+                {{ registration_form.email(class_="validate") }}
+                {{ registration_form.email.label }}
+            </div>
+            <div class="">
+                <i class="">username</i>
+                {{ registration_form.username(class_="validate") }}
+                {{ registration_form.username.label }}
+            </div>
+            <div class="">
+                <i class="">address</i>
+                {{ registration_form.address(class_="validate") }}
+                {{ registration_form.address.label }}
+            </div>
+            <div class="">
+                <i class="">password</i>
+                {{ registration_form.password(class_="validate") }}
+                {{ registration_form.password.label }}
+            </div>
+    <button type="submit" class="button button2">Register</button>
+
+</form>
+
 </body>
 </html>

@@ -1,40 +1,29 @@
-from flask import Flask, render_template, request, redirect
-from forms import registration_form
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, redirect,session
 from models.user import User
-
+from models.auction import Auction
+from models.offer import Offer
+from models import db
+from views.index import Index
+from views.registration import Register
+from views.login import Login
+from config import Config
 import os
 
-SECRET_KEY = os.urandom(32)
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config.from_object(Config)
+db.init_app(app)
 
-@app.route('/index')
-def hello_world():
-    numbers = ["one", "two", "three"]
-    word = "some words"
-    context = {"some_list": numbers, "word1": word}
-    return render_template("index.html", **context)
+with app.app_context():
+    db.create_all()
+
+app.add_url_rule('/index', view_func=Index.as_view('index'))
+app.add_url_rule('/register', view_func=Register.as_view('register'))
+app.add_url_rule('/login', view_func=Login.as_view('login'))
+
 
 
 if __name__ == '__main__':
+    db.create_all(app=app)
     app.run()
-
-# ORM (Object relational mapper) = SQL -> Mapping -> Python
-# ORM = Python -> Mapping -> SQL
-
-# MVT -> Model -> (View Templates)
-
-# @app.route('/register', methods=["GET", "POST"])
-# def register():
-#     form = registration_form()
-#     if request.method == "POST":
-#         form = registration_form(request.form)
-#         if form.validate_on_submit():
-#             user = User(None, form.email, form.username, form.password)
-#             database.session.add(user)
-#             database.session.commit()
-#
-#         return redirect('/index')
-#     return render_template("register.html", form=form)

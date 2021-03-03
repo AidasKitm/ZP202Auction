@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST">
+    {{ login_form.csrf_token }}
+                <div class="">
+                <b>Username</b>
+                {% for error in login_form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ login_form.username(class_="validate") }}
+                {{ login_form.username.label }}
+            </div>
+            <div class="">
+                <i class="">password</i>
+                {% for error in login_form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ login_form.password(class_="validate") }}
+                {{ login_form.password.label }}
+            </div>
+    <button type="submit" class="button button2">Login</button>
+
+</form>
+</body>
+</html>
