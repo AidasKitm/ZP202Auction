@@ -1,13 +1,15 @@
-from flask import redirect,url_for,render_template, session
+from flask import redirect,url_for,render_template, session,request
+from flask.views import MethodView
 from forms.auction_form import AuctionForm
-from werkzeug.utils import secure_filename
-from tinify import tinify
 from models import db
 from models.user import User
 from models.auction import Auction
 import os
+from werkzeug.utils import secure_filename
+import tinify
 
-class CreateAuction():
+
+class CreateAuction(MethodView):
     def get(self):
         auction_form = AuctionForm()
 
@@ -23,13 +25,16 @@ class CreateAuction():
             user = User.query.filter_by(username=session.get('username')).first()
 
             file = auction_form.auction_image.data
-            file_name = user.username + "_" + file.filename
-            image_file = secure_filename(file_name)
+            if file is not None:
+                print(f"File name : {file}")
+                file_name = user.username + "_" + file.filename
+                print(f"File name : {file_name}")
+                image_file = secure_filename(file_name)
+                tinify.tinify.key = '41fZm74Q31R6hTWpMGM0ld9tRZ5HFfQ0'
+                tinify.tinify.from_file(path=file).to_file(os.path.join("./static/auction_images", image_file))
 
-            tinify.key = os.environ['tinify']
-
-            tinify.from_file(file).to_file(os.path.join("./static/auction_images", image_file))
-
+            else:
+                image_file = "default_auction.jpg"
             new_auction = Auction(title=auction_form.title.data,
                                   category=auction_form.category.data,
                                   city=auction_form.city.data,

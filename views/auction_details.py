@@ -7,7 +7,7 @@ from models.offer import Offer
 from models.auction import Auction
 
 
-class Auctions(MethodView):
+class AuctionDetails(MethodView):
 
     def get(self, auction_id):
         auction = Auction.query.filter_by(id=auction_id).first()
@@ -25,7 +25,7 @@ class Auctions(MethodView):
             for offer in offers_in_auction:
                 top_bidders.append(User.query.filter_by(id=offer.user_id).first())
 
-        return render_template("auctionListing.html",
+        return render_template("auctionDetails.html",
                                auction=auction,
                                offers=offers_in_auction,
                                top_bidders=top_bidders)
