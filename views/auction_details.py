@@ -1,4 +1,3 @@
-import datetime
 from flask import redirect, url_for, render_template, session, flash, request
 from flask.views import MethodView
 from models import db
@@ -25,10 +24,12 @@ class AuctionDetails(MethodView):
             for offer in offers_in_auction:
                 top_bidders.append(User.query.filter_by(id=offer.user_id).first())
 
+        user = User.query.filter_by(id=auction.id).first()
         return render_template("auctionDetails.html",
                                auction=auction,
                                offers=offers_in_auction,
-                               top_bidders=top_bidders)
+                               top_bidders=top_bidders,
+                               user=user)
 
     def post(self, auction_id):
         auction = Auction.query.filter_by(id=auction_id).first()

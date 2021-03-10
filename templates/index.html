@@ -5,12 +5,61 @@
     <title>Website something</title>
 </head>
 <body>
+{% include 'base.html' %}
+{{ user }}
+<div class="container">
+    <div class="row">
+        {% for auction in auctions %}
+            <a href="{{ url_for('auction', auction_id=auction.id) }}">
+                <ul class="collection">
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Title : {{ auction.title }}
 
- <p> {% for element in some_list %}
-    {{ element }} <br>
- {% endfor %}
- {{ user }}
- </p>
+                    </div>
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Category : {{ auction.category }}
+
+                    </div>
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        City : {{ auction.city }}
+
+                    </div>
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        {{ auction.minimal_price.label }} : {{ auction.minimal_price }}
+                    </div>
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Day Ending : {{ auction.end_day }}
+
+                    </div>
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Time Ending : {{ auction.end_hour }}
+
+                    </div>
+
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Description : {{ auction.description }}
+
+                    </div>
+
+                    <div class="collection-item col s12 m6">
+                        <i class="material-icons prefix"></i>
+                        Views : {{ auction.views }}
+
+                    </div>
+
+                </ul>
+            </a>
+        {% endfor %}
+
+    </div>
+</div>
 
 </body>
 </html>

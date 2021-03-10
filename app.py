@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask
 from flask_socketio import SocketIO, emit
 from models.user import User
 from models.auction import Auction
@@ -20,7 +20,7 @@ socketio = SocketIO(app=app)
 with app.app_context():
     db.create_all(app=app)
 
-app.add_url_rule('/index', view_func=Index.as_view('index'))
+app.add_url_rule('/', view_func=Index.as_view('index'))
 app.add_url_rule('/register', view_func=Register.as_view('register'))
 app.add_url_rule('/login', view_func=Login.as_view('login'))
 app.add_url_rule('/logout', view_func=LogOut.as_view('logout'))
